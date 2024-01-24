@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -16,6 +16,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -87,8 +89,8 @@ const App = () => {
   const blogForm = () => {
     if (!user) return
     return (
-      <Togglable labels={{open: 'Add item', close: 'Cancel'}}>
-        <BlogForm user={user} setNoteMessage={setNoteMessage}/>
+      <Togglable ref={blogFormRef} labels={{open: 'Add item', close: 'Cancel'}}>
+        <BlogForm toggle={blogFormRef} user={user} setNoteMessage={setNoteMessage}/>
       </Togglable>  
     )
   }
@@ -106,9 +108,11 @@ const App = () => {
     <div>
       { errorMessage && <div style={{color: 'red'}}>{errorMessage}</div> }
       { noteMessage && <div style={{color: 'green'}}>{noteMessage}</div> }
+
       <h2>Login</h2>
       { showLogin() }
       { showLoggedIn() }
+
       <h2>Blogs</h2>
       { blogForm() }
       <Blog blogItems={blogs}/>

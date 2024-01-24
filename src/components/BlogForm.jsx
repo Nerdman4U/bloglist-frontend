@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogForm = ({user, setNoteMessage}) => {
+const BlogForm = ({user, setNoteMessage, toggle}) => {
   const [newBlog, setNewBlog] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
@@ -14,6 +14,7 @@ const BlogForm = ({user, setNoteMessage}) => {
     setTimeout(() => {
       setNoteMessage(null)
     }, 3000)
+    toggle.current.toggleVisibility()
   }
 
   return (

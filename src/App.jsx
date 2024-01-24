@@ -17,11 +17,12 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
+  const [loginVisible, setLoginVisible] = useState(false) // show login form
 
-  useEffect(() => { 
+  useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -57,7 +58,7 @@ const App = () => {
 
       setNoteMessage('Tervetuloa!')
       setTimeout(() => {
-        setNoteMessage(null)        
+        setNoteMessage(null)
       }, 1000)
 
     } catch(e) {
@@ -67,8 +68,8 @@ const App = () => {
       }, 5000)
     }
   }
-  const usernameClickHandler = ({target}) => { 
-    setUsername(target.value) 
+  const usernameClickHandler = ({target}) => {
+    setUsername(target.value)
   }
   const passwordClickHandler = ({target}) => { setPassword(target.value) }
   const addBlogHandler = (event) => {
@@ -83,7 +84,19 @@ const App = () => {
 }
 
   function showLogin(props) {
-    return <LoginForm loginFormHandler={loginHandler} usernameClickHandler={usernameClickHandler} passwordClickHandler={passwordClickHandler} username={username} password={password} />
+    const hideWhenVisible = { display: loginVisible ? 'none' : 'block' }
+    const showWhenVisible = { display: loginVisible ? 'block' : 'none' }
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>login</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm loginFormHandler={loginHandler} usernameClickHandler={usernameClickHandler} passwordClickHandler={passwordClickHandler} username={username} password={password} />
+          <button onClick={() => setLoginVisible(false)}>cancel</button>
+        </div>
+      </div>
+    )
   }
 
   const noteForm = () => {
@@ -100,12 +113,12 @@ const App = () => {
       </form>
     )
   }
- 
+
   return (
     <div>
       { errorMessage && <div style={{color: 'red'}}>{errorMessage}</div> }
       { noteMessage && <div style={{color: 'green'}}>{noteMessage}</div> }
-      <h2>Blogs</h2>      
+      <h2>Blogs</h2>
         { !user && showLogin({user}) }
         { user && <div>
           <p>{user.name} logged in</p>{ noteForm() }

@@ -1,8 +1,8 @@
 const LoginForm = ({
-  loginFormHandler, 
-  usernameClickHandler, 
-  passwordClickHandler, 
-  username, 
+  loginFormHandler,
+  usernameClickHandler,
+  passwordClickHandler,
+  username,
   password
 }) => {
   return (

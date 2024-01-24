@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 
 const BlogForm = ({user, setNoteMessage, toggle}) => {
-  const [newBlog, setNewBlog] = useState('')
+  const [newBlog, setNewBlog] = useState(null)
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
 
@@ -32,7 +32,7 @@ const BlogForm = ({user, setNoteMessage, toggle}) => {
         </tbody>
       </table>
       <button type="submit">Save</button>
-    </form>   
+    </form>
   )
 }
 

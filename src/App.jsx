@@ -73,17 +73,17 @@ const App = () => {
   const passwordClickHandler = ({target}) => { setPassword(target.value) }
   const showLogin = () => {
     if (user) return
-    return ( 
+    return (
       <Togglable labels={{open: 'Login', close: 'Cancel'}}>
-        <LoginForm 
-          loginFormHandler={loginHandler} 
-          usernameClickHandler={usernameClickHandler} 
-          passwordClickHandler={passwordClickHandler} 
-          username={username} 
-          password={password} 
+        <LoginForm
+          loginFormHandler={loginHandler}
+          usernameClickHandler={usernameClickHandler}
+          passwordClickHandler={passwordClickHandler}
+          username={username}
+          password={password}
         />
-      </Togglable>      
-    )  
+      </Togglable>
+    )
   }
 
   const blogForm = () => {
@@ -91,13 +91,13 @@ const App = () => {
     return (
       <Togglable ref={blogFormRef} labels={{open: 'Add item', close: 'Cancel'}}>
         <BlogForm toggle={blogFormRef} user={user} setNoteMessage={setNoteMessage}/>
-      </Togglable>  
+      </Togglable>
     )
   }
 
   const showLoggedIn = () => {
     if (!user) return
-    return ( 
+    return (
       <p>
         {user.name} logged in. <button onClick={() => logOut()}>Logout</button>
       </p>
@@ -106,8 +106,8 @@ const App = () => {
 
   return (
     <div>
-      { errorMessage && <div style={{color: 'red'}}>{errorMessage}</div> }
-      { noteMessage && <div style={{color: 'green'}}>{noteMessage}</div> }
+      { errorMessage && <div style={{color: 'red', position: 'absolute', top: '10px', right: '10px'}}>{errorMessage}</div> }
+      { noteMessage && <div style={{color: 'green', position: 'absolute', top: '10px', right: '10px'}}>{noteMessage}</div> }
 
       <h2>Login</h2>
       { showLogin() }
@@ -115,7 +115,7 @@ const App = () => {
 
       <h2>Blogs</h2>
       { blogForm() }
-      <Blog blogItems={blogs}/>
+      <Blog blogItems={blogs} setNoteMessage={setNoteMessage}/>
     </div>
   )
 }

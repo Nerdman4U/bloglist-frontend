@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const BlogForm = () => {
+const BlogForm = ({user, setNoteMessage}) => {
   const [newBlog, setNewBlog] = useState('')
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')

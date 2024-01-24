@@ -17,7 +17,7 @@ const create = async newObject => {
   const config = {
     headers: { Authorization: token}
   }
-  console.log('blogService.create() token:', token, newObject)
+  //console.log('blogService.create() token:', token, newObject)
   const response = await axios.post(baseUrl, newObject, config)
   return response.data
 }

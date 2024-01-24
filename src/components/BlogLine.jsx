@@ -1,11 +1,10 @@
 const BlogLine = ({ blog }) => {
   return (
-    <tr>
-      <td>{blog.title}</td>
-      <td>{blog.author}</td>
-      <td>{blog.url}</td>
-      <td>{blog.likes}</td>
-    </tr>
+    <div>
+      <div>
+        Author: {blog.author} Url:{blog.url} Likes:{blog.likes} <button>Like</button>
+      </div>
+    </div>
   )
 }
 

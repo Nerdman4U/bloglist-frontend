@@ -66,11 +66,9 @@ const App = () => {
       }, 5000)
     }
   }
-  const usernameClickHandler = ({target}) => {
-    setUsername(target.value)
-  }
-  const passwordClickHandler = ({target}) => { setPassword(target.value) }
 
+  const usernameClickHandler = ({target}) => { setUsername(target.value) }
+  const passwordClickHandler = ({target}) => { setPassword(target.value) }
   const showLogin = () => {
     if (user) return
     return ( 
@@ -87,9 +85,10 @@ const App = () => {
   }
 
   const blogForm = () => {
+    if (!user) return
     return (
       <Togglable labels={{open: 'Add item', close: 'Cancel'}}>
-        <BlogForm />
+        <BlogForm user={user} setNoteMessage={setNoteMessage}/>
       </Togglable>  
     )
   }
@@ -107,9 +106,10 @@ const App = () => {
     <div>
       { errorMessage && <div style={{color: 'red'}}>{errorMessage}</div> }
       { noteMessage && <div style={{color: 'green'}}>{noteMessage}</div> }
-      <h2>Blogs</h2>
+      <h2>Login</h2>
       { showLogin() }
       { showLoggedIn() }
+      <h2>Blogs</h2>
       { blogForm() }
       <Blog blogItems={blogs}/>
     </div>

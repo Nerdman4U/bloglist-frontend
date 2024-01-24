@@ -10,7 +10,7 @@ const Togglable = (props) => {
   }
 
   return (
-    <div style={{padding:'10px', margin:"3px", border: '1px solid black'}}>
+    <div style={{margin:"5px 0", padding:"4px 0"}}>
       <div style={hideWhenVisible}>
         <button onClick={() => setLoginVisible(true)}>{props.labels.open}</button>
       </div>

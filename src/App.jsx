@@ -3,10 +3,11 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [noteMessage, setNoteMessage] = useState(null)
@@ -15,9 +16,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [url, setUrl] = useState('')
-  const [loginVisible, setLoginVisible] = useState(false) // show login form
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -72,45 +70,36 @@ const App = () => {
     setUsername(target.value)
   }
   const passwordClickHandler = ({target}) => { setPassword(target.value) }
-  const addBlogHandler = (event) => {
-    event.preventDefault()
-    console.log('addBlogHandler', title)
-    blogService.create({'title': title, 'author': user.name, 'url': '', 'likes': 0})
 
-    setNoteMessage(`Added ${title} by ${user.name}`)
-    setTimeout(() => {
-      setNoteMessage(null)
-    }, 3000)
-}
+  const showLogin = () => {
+    if (user) return
+    return ( 
+      <Togglable labels={{open: 'Login', close: 'Cancel'}}>
+        <LoginForm 
+          loginFormHandler={loginHandler} 
+          usernameClickHandler={usernameClickHandler} 
+          passwordClickHandler={passwordClickHandler} 
+          username={username} 
+          password={password} 
+        />
+      </Togglable>      
+    )  
+  }
 
-  function showLogin(props) {
-    const hideWhenVisible = { display: loginVisible ? 'none' : 'block' }
-    const showWhenVisible = { display: loginVisible ? 'block' : 'none' }
+  const blogForm = () => {
     return (
-      <div>
-        <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>login</button>
-        </div>
-        <div style={showWhenVisible}>
-          <LoginForm loginFormHandler={loginHandler} usernameClickHandler={usernameClickHandler} passwordClickHandler={passwordClickHandler} username={username} password={password} />
-          <button onClick={() => setLoginVisible(false)}>cancel</button>
-        </div>
-      </div>
+      <Togglable labels={{open: 'Add item', close: 'Cancel'}}>
+        <BlogForm />
+      </Togglable>  
     )
   }
 
-  const noteForm = () => {
-    blogService.print()
-      return (
-      <form onSubmit={addBlogHandler}>
-        <table>
-          <tbody>
-            <tr><td>Title</td><td><input key="title" value={title} onChange={({target}) => setTitle(target.value)}></input></td></tr>
-            <tr><td>URL</td><td><input key="url" value={url} onChange={({target}) => setUrl(target.value)}></input></td></tr>
-          </tbody>
-        </table>
-        <button type="submit">Save</button>
-      </form>
+  const showLoggedIn = () => {
+    if (!user) return
+    return ( 
+      <p>
+        {user.name} logged in. <button onClick={() => logOut()}>Logout</button>
+      </p>
     )
   }
 
@@ -119,17 +108,10 @@ const App = () => {
       { errorMessage && <div style={{color: 'red'}}>{errorMessage}</div> }
       { noteMessage && <div style={{color: 'green'}}>{noteMessage}</div> }
       <h2>Blogs</h2>
-        { !user && showLogin({user}) }
-        { user && <div>
-          <p>{user.name} logged in</p>{ noteForm() }
-          </div>
-        }
-
-        <Blog blogItems={blogs}/>
-
-        <div>
-          <button onClick={() => logOut()}>log out</button>
-        </div>
+      { showLogin() }
+      { showLoggedIn() }
+      { blogForm() }
+      <Blog blogItems={blogs}/>
     </div>
   )
 }

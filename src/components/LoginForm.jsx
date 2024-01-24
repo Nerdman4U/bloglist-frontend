@@ -1,6 +1,12 @@
-const LoginForm = ({loginFormHandler, usernameClickHandler, passwordClickHandler, username, password}) => {
+const LoginForm = ({
+  loginFormHandler, 
+  usernameClickHandler, 
+  passwordClickHandler, 
+  username, 
+  password
+}) => {
   return (
-    <>
+    <div>
     <h2>Login</h2>
     <form onSubmit={loginFormHandler}>
       <div>
@@ -25,7 +31,7 @@ const LoginForm = ({loginFormHandler, usernameClickHandler, passwordClickHandler
       </div>
       <button type="submit">login</button>
     </form>
-    </>
+    </div>
   )
 }
 

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
+
 const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog, user }) => {
   const [likes, setLikes] = useState(blog.likes)
 
@@ -18,7 +20,7 @@ const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog, user }) => 
   // must be logged in and be the author to remove.
   const showRemoveButton = () => {
     if (!user) return
-    if (!user.name) return    
+    if (!user.name) return
     if (user.name !== blog.author) return
     return <button onClick={removeBlogHandler}>Remove</button>
   }
@@ -26,20 +28,28 @@ const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog, user }) => 
   // must be logged in to like.
   const showLikeButton = () => {
     if (!user) return
-    return <button onClick={likeBlogHandler}>Like</button>    
+    return <button onClick={likeBlogHandler}>Like</button>
   }
 
   return (
     <div>
       <div>
-        Author:{blog.author} 
-        Url:{blog.url} 
-        Likes:{likes} 
+        Author:{blog.author}
+        Url:{blog.url}
+        Likes:{likes}
         {showLikeButton()}
         {showRemoveButton()}
       </div>
     </div>
   )
+}
+
+BlogLine.propTypes = {
+  blog: PropTypes.object.isRequired,
+  setNoteMessage: PropTypes.func.isRequired,
+  increaseLikes: PropTypes.func.isRequired,
+  removeBlog: PropTypes.func.isRequired,
+  user: PropTypes.object
 }
 
 export default BlogLine

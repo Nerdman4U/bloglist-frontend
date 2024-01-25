@@ -32,7 +32,7 @@ const App = () => {
 
   const loginHandler = async (event) => {
     event.preventDefault()
-    try {      
+    try {
       const user = await loginService.login({
         username, password
       })
@@ -59,12 +59,12 @@ const App = () => {
     }
   }
 
-  const usernameClickHandler = ({target}) => { setUsername(target.value) }
-  const passwordClickHandler = ({target}) => { setPassword(target.value) }
+  const usernameClickHandler = ({ target }) => { setUsername(target.value) }
+  const passwordClickHandler = ({ target }) => { setPassword(target.value) }
   const showLogin = () => {
     if (user) return
     return (
-      <Togglable labels={{open: 'Login', close: 'Cancel'}}>
+      <Togglable labels={{ open: 'Login', close: 'Cancel' }}>
         <LoginForm
           loginFormHandler={loginHandler}
           usernameClickHandler={usernameClickHandler}
@@ -87,8 +87,8 @@ const App = () => {
 
   return (
     <div>
-      { errorMessage && <div style={{color: 'red', position: 'absolute', top: '10px', right: '10px'}}>{errorMessage}</div> }
-      { noteMessage && <div style={{color: 'green', position: 'absolute', top: '10px', right: '10px'}}>{noteMessage}</div> }
+      { errorMessage && <div style={{ color: 'red', position: 'absolute', top: '10px', right: '10px' }}>{errorMessage}</div> }
+      { noteMessage && <div style={{ color: 'green', position: 'absolute', top: '10px', right: '10px' }}>{noteMessage}</div> }
 
       <h2>Login</h2>
       { showLogin() }

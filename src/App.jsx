@@ -4,10 +4,8 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
-import BlogForm from './components/BlogForm'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [noteMessage, setNoteMessage] = useState(null)
@@ -16,14 +14,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
-  const blogFormRef = useRef()
-
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -86,15 +76,6 @@ const App = () => {
     )
   }
 
-  const blogForm = () => {
-    if (!user) return
-    return (
-      <Togglable ref={blogFormRef} labels={{open: 'Add item', close: 'Cancel'}}>
-        <BlogForm toggle={blogFormRef} user={user} setNoteMessage={setNoteMessage}/>
-      </Togglable>
-    )
-  }
-
   const showLoggedIn = () => {
     if (!user) return
     return (
@@ -114,8 +95,7 @@ const App = () => {
       { showLoggedIn() }
 
       <h2>Blogs</h2>
-      { blogForm() }
-      <Blog blogItems={blogs} setNoteMessage={setNoteMessage}/>
+      <Blog setNoteMessage={setNoteMessage} user={user}/>
     </div>
   )
 }

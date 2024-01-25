@@ -1,25 +1,28 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
-const BlogLine = ({ blog, setNoteMessage, update }) => {
+const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog }) => {
   const [likes, setLikes] = useState(blog.likes)
 
-  const likeBlogHandler = (blog) => {
-    //console.log('likeBlogHandler()', blog)
+  const likeBlogHandler = (event) => {
     const newLikes = likes + 1
-    //console.log('New likes', newLikes)
     setLikes(newLikes)
-    blogService.update(blog.id, {'title': blog.title, 'author': blog.author, 'url': blog.url, 'likes': newLikes})
-    setNoteMessage(`Likes ${newLikes}`)
-    setTimeout(() => {
-      setNoteMessage(null)
-    }, 3000)
-    update(blog.id, newLikes)
+    increaseLikes(blog, newLikes)
+  }
+
+  const removeBlogHandler = (event) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      removeBlog(blog)
+    }
   }
 
   return (
     <div>
       <div>
-        Author:{blog.author} Url:{blog.url} Likes:{likes} <button onClick={() => likeBlogHandler(blog)}>Like</button>
+        Author:{blog.author} 
+        Url:{blog.url} 
+        Likes:{likes} 
+        <button onClick={likeBlogHandler}>Like</button>
+        <button onClick={removeBlogHandler}>Remove</button>
       </div>
     </div>
   )

@@ -1,24 +1,19 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogForm = ({user, setNoteMessage, toggle}) => {
-  const [newBlog, setNewBlog] = useState(null)
+const BlogForm = ({createBlog}) => {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
 
-  const addBlogHandler = (event) => {
+  const addBlog = (event) => {
     event.preventDefault()
-    console.log('addBlogHandler', title)
-    blogService.create({'title': title, 'author': user.name, 'url': '', 'likes': 0})
-    setNoteMessage(`Added ${title} by ${user.name}`)
-    setTimeout(() => {
-      setNoteMessage(null)
-    }, 3000)
-    toggle.current.toggleVisibility()
+    createBlog({title: title, url: url})
+    setTitle('')
+    setUrl('')
   }
 
   return (
-    <form onSubmit={addBlogHandler}>
+    <form onSubmit={addBlog}>
       <table>
         <tbody>
           <tr>

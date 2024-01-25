@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
-const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog }) => {
+const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog, user }) => {
   const [likes, setLikes] = useState(blog.likes)
 
   const likeBlogHandler = (event) => {
@@ -15,14 +15,28 @@ const BlogLine = ({ blog, setNoteMessage, increaseLikes, removeBlog }) => {
     }
   }
 
+  // must be logged in and be the author to remove.
+  const showRemoveButton = () => {
+    if (!user) return
+    if (!user.name) return    
+    if (user.name !== blog.author) return
+    return <button onClick={removeBlogHandler}>Remove</button>
+  }
+
+  // must be logged in to like.
+  const showLikeButton = () => {
+    if (!user) return
+    return <button onClick={likeBlogHandler}>Like</button>    
+  }
+
   return (
     <div>
       <div>
         Author:{blog.author} 
         Url:{blog.url} 
         Likes:{likes} 
-        <button onClick={likeBlogHandler}>Like</button>
-        <button onClick={removeBlogHandler}>Remove</button>
+        {showLikeButton()}
+        {showRemoveButton()}
       </div>
     </div>
   )

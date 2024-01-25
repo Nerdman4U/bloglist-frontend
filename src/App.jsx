@@ -32,7 +32,7 @@ const App = () => {
 
   const loginHandler = async (event) => {
     event.preventDefault()
-    try {
+    try {      
       const user = await loginService.login({
         username, password
       })

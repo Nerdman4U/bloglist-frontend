@@ -88,7 +88,7 @@ const Blog = ({ setNoteMessage, user }) => {
               <div key={blogItem.id} style={{border:"1px solid black", margin:"5px 0", padding:"10px"}}>
                 <div>Title: {blogItem.title}</div>
                 <Togglable labels={{open: 'View', close: 'Hide'}}>
-                  <BlogLine key={blogItem.id} blog={blogItem} setNoteMessage={setNoteMessage} increaseLikes={increaseLikes} removeBlog={removeBlog}/>
+                  <BlogLine key={blogItem.id} user={user} blog={blogItem} setNoteMessage={setNoteMessage} increaseLikes={increaseLikes} removeBlog={removeBlog}/>
                 </Togglable>
               </div>
             )

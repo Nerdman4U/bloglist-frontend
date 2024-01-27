@@ -18,13 +18,13 @@ describe('Blog', () => {
     setNoteMessage = jest.fn()
   })
 
-  test('renders content', () => {
+  it('renders content', () => {
     render(<Blog blog={blog} removeBlog={removeBlog} increaseLikes={increateLikes} setNoteMessage={setNoteMessage} />)
     const element = screen.getByText('Title: my great new log title')
     expect(element).toBeDefined()
   })
 
-  test('click how more button to view full details of blog post', async () => {
+  it('shows additional content after clicking view', async () => {
     render(<Blog blog={blog} removeBlog={removeBlog} increaseLikes={increateLikes} setNoteMessage={setNoteMessage} />)
     const user = userEvent.setup()
     const button = screen.getByText('View')
@@ -35,6 +35,17 @@ describe('Blog', () => {
     expect(screen.findByText('Author: me')).toBeDefined()
     expect(screen.findByText('Likes: 1')).toBeDefined()
     expect(screen.findByText('Url: http://exampl.e.com')).toBeDefined()
+  })
+
+  it.only('runs event handler after clicking like', async () => {
+    const loggedin = { name: 'me' }
+    render(<Blog blog={blog} removeBlog={removeBlog} increaseLikes={increateLikes} setNoteMessage={setNoteMessage} user={loggedin}/>)
+    const user = userEvent.setup()
+    const likeButton = screen.getByText('Like')
+    await user.click(likeButton)
+    await user.click(likeButton)
+    expect(increateLikes).toHaveBeenCalledTimes(2)
+
   })
 
 })

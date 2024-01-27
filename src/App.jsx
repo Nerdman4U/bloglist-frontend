@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
+import BlogContainer from './components/BlogContainer'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
@@ -95,7 +95,7 @@ const App = () => {
       { showLoggedIn() }
 
       <h2>Blogs</h2>
-      <Blog setNoteMessage={setNoteMessage} user={user}/>
+      <BlogContainer setNoteMessage={setNoteMessage} user={user}/>
     </div>
   )
 }

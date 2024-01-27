@@ -7,6 +7,8 @@ test('renders content', () => {
   const blog = {
     title: 'my great new log title',
     author: 'me',
+    likes: 1,
+    url: 'http://exampl.e.com'
   }
 
   const removeBlog = jest.fn()

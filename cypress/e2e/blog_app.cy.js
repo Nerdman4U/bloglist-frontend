@@ -68,5 +68,27 @@ describe('Blog app', function() {
       })
     })
 
+    it('orders blogs by likes', function() {
+      cy.login('username1', 'password1')
+      cy.add_blog({ title: 'title1', url: 'url1' })
+      cy.add_blog({ title: 'title2', url: 'url2' })
+      cy.add_blog({ title: 'title3', url: 'url3' })
+
+      cy.get('.blog').contains('title1').parent().contains('View').click()
+      cy.get('.blog').contains('title1').parent().contains('Like').click()
+
+      cy.get('.blog').contains('title2').parent().contains('View').click()
+      cy.get('.blog').contains('title2').parent().contains('Like').click()
+      cy.get('.blog').contains('title2').parent().contains('Like').click()
+      cy.get('.blog').contains('title2').parent().contains('Like').click()
+
+      cy.get('.blog').contains('title3').parent().contains('View').click()
+      cy.get('.blog').contains('title3').parent().contains('Like').click()
+      cy.get('.blog').contains('title3').parent().contains('Like').click()
+
+      cy.get('.blog').eq(0).contains('title2')
+      cy.get('.blog').eq(1).contains('title3')
+      cy.get('.blog').eq(2).contains('title1')
+    })
   })
 })

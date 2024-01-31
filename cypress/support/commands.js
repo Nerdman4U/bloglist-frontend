@@ -65,4 +65,15 @@ Cypress.Commands.add('add_blog', ({ title, url }) => {
   cy.load_page()
 })
 
+// Cypress.Commands.add('like_blog', ({ id }) => {
+//   cy.request({
+//     url: `http://localhost:3003/api/blogs/${id}/like`,
+//     method: 'PUT',
+//     headers: {
+//       'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}`
+//     }
+//   })
+//   cy.load_page()
+// })
+
 

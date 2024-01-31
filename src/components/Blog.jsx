@@ -34,7 +34,7 @@ const Blog = ({ blog, setNoteMessage, increaseLikes, removeBlog, user }) => {
 
   return (
 
-    <div key={blog.id} style={{ border:'1px solid black', margin:'5px 0', padding:'10px' }}>
+    <div className="blog" key={blog.id} style={{ border:'1px solid black', margin:'5px 0', padding:'10px' }}>
       <div>Title: {blog.title}</div>
       <Togglable labels={{ open: 'View', close: 'Hide' }}>
         <div>

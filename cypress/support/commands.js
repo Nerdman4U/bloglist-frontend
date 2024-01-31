@@ -35,12 +35,18 @@ Cypress.Commands.add('login', (username, password) => {
 
 Cypress.Commands.add('reset_database', () => {
   cy.request('POST', 'http://localhost:3003/api/testing/reset')
-  const user = {
+  const user1 = {
     name: 'name1',
     username: 'username1',
     password: 'password1'
   }
-  cy.request('POST', 'http://localhost:3003/api/users/', user)
+  const user2 = {
+    name: 'name2',
+    username: 'username2',
+    password: 'password2'
+  }
+  cy.request('POST', 'http://localhost:3003/api/users/', user1)
+  cy.request('POST', 'http://localhost:3003/api/users/', user2)
 })
 
 Cypress.Commands.add('load_page', () => {

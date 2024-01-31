@@ -52,6 +52,20 @@ describe('Blog app', function() {
         cy.contains('Like').click()
         cy.contains('Likes:1')
       })
+
+      it('can be removed', function() {
+        cy.contains('title1')
+        cy.contains('View').click()
+        cy.contains('Remove').click()
+        cy.get('html').should('not.contain', 'title1')
+      })
+
+      it('does not show remove button if not author', function() {
+        cy.login('username2', 'password2')
+        cy.contains('title1')
+        cy.contains('View').click()
+        cy.contains('Remove').should('not.exist')
+      })
     })
 
   })

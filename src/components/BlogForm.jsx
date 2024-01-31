@@ -28,7 +28,7 @@ const BlogForm = ({ createBlog }) => {
           </tr>
         </tbody>
       </table>
-      <button type="submit">Save</button>
+      <button id="add-blog" type="submit">Save</button>
     </form>
   )
 }

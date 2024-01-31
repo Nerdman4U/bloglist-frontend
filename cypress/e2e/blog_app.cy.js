@@ -1,14 +1,8 @@
 describe('Blog app', function() {
 
   beforeEach(function() {
-    cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
-      name: 'name1',
-      username: 'username1',
-      password: 'password1'
-    }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
-    cy.visit('http://localhost:5173')
+    cy.reset_database()
+    cy.load_page()
   })
 
   it('can open front page', function() {
@@ -31,28 +25,34 @@ describe('Blog app', function() {
     cy.contains('name1 logged in')
   })
 
-  it.only('fails login', function() {
+  it('fails login', function() {
     cy.get('button').contains('Login').click()
     cy.get('#username').type('username2')
     cy.get('#password').type('password1')
     cy.get('#login-button').click()
-    cy.contains('Wrong credentials')
+    cy.get('.error').contains('Wrong credentials')
+    cy.get('html').should('not.contain', 'logged in')
+    cy.contains('logged in').should('not.exist')
   })
 
   describe('when logged in', function() {
     beforeEach(function() {
-      cy.get('button').contains('Login').click()
-      cy.get('#username').type('username1')
-      cy.get('#password').type('password1')
-      cy.get('#login-button').click()
+      cy.login('username1', 'password1')
     })
 
-    it('can create a new blog', function() {
-      cy.contains('Add item').click()
-      cy.get('[placeholder="write title"]').type('title1')
-      cy.get('[placeholder="write url"]').type('url1')
-      cy.get('#add-blog').click()
-      cy.contains('title1')
+    describe('and a blog exists', function() {
+      beforeEach(function() {
+        cy.add_blog({ title: 'title1', url: 'url1' })
+      })
+
+      it('it can be liked', function() {
+        cy.contains('title1')
+        cy.contains('View').click()
+        cy.contains('Likes:0')
+        cy.contains('Like').click()
+        cy.contains('Likes:1')
+      })
     })
+
   })
 })

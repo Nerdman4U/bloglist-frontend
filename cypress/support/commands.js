@@ -23,3 +23,40 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.request('POST', 'http://localhost:3003/api/login', {
+    username, password
+  }).then(({ body }) => {
+    localStorage.setItem('loggedBlogappUser', JSON.stringify(body))
+    cy.load_page()
+  })
+})
+
+Cypress.Commands.add('reset_database', () => {
+  cy.request('POST', 'http://localhost:3003/api/testing/reset')
+  const user = {
+    name: 'name1',
+    username: 'username1',
+    password: 'password1'
+  }
+  cy.request('POST', 'http://localhost:3003/api/users/', user)
+})
+
+Cypress.Commands.add('load_page', () => {
+  cy.visit('http://localhost:5173')
+})
+
+Cypress.Commands.add('add_blog', ({ title, url }) => {
+  cy.request({
+    url: 'http://localhost:3003/api/blogs',
+    method: 'POST',
+    body: { title, url, likes: 0 },
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}`
+    }
+  })
+  cy.load_page()
+})
+
+

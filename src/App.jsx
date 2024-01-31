@@ -87,8 +87,8 @@ const App = () => {
 
   return (
     <div>
-      { errorMessage && <div style={{ color: 'red', position: 'absolute', top: '10px', right: '10px' }}>{errorMessage}</div> }
-      { noteMessage && <div style={{ color: 'green', position: 'absolute', top: '10px', right: '10px' }}>{noteMessage}</div> }
+      { errorMessage && <div className="error" style={{ color: 'red', position: 'absolute', top: '10px', right: '10px' }}>{errorMessage}</div> }
+      { noteMessage && <div className="note" style={{ color: 'green', position: 'absolute', top: '10px', right: '10px' }}>{noteMessage}</div> }
 
       <h2>Login</h2>
       { showLogin() }
